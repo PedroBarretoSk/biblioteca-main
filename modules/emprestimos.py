@@ -1,4 +1,4 @@
-#Lestat & Barbara
+#Lestat & Barbara.
 from datetime import datetime # importa a biblioteca para definir datas
 from dados import livros, alunos, emprestimos # importa as listas do modulo dados
 
