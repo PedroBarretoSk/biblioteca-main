@@ -1,16 +1,16 @@
-from modules.livros import (
+from modules.gerenciadorLivros import (
     cadastrar_livro,
     listar_livros,
     buscar_livro
 )
 
-from modules.usuarios import (
+from models.usuarios import (
     cadastrar_aluno,
     listar_alunos,
     buscar_aluno
 )
 
-from modules.emprestimos import realizar_emprestimo
+from models.modules.emprestimos import realizar_emprestimo
 from modules.devolucoes import devolver_livro
 from modules.historico import listar_historico
 from modules.relatorios import menu_relatorios
