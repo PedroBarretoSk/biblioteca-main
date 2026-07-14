@@ -19,18 +19,18 @@ def menu():
 
     while True:
 
-        print("\n========== BIBLIOTECA ==========")
-        print("1 - Cadastrar Livro")
-        print("2 - Listar Livros")
-        print("3 - Buscar Livro")
-        print("4 - Cadastrar Aluno")
-        print("5 - Listar Alunos")
-        print("6 - Buscar Aluno")
-        print("7 - Realizar Empréstimo")
-        print("8 - Devolver Livro")
-        print("9 - Histórico")
-        print("10 - Relatórios")
-        print("0 - Sair")
+        print('''\n========== BIBLIOTECA ==========
+        1 - Cadastrar Livro
+        2 - Listar Livros
+        3 - Buscar Livro
+        4 - Cadastrar Aluno
+        5 - Listar Alunos
+        6 - Buscar Aluno
+        7 - Realizar Empréstimo
+        8 - Devolver Livro
+        9 - Histórico
+        10 - Relatórios
+        0 - Sair''')
 
         opcao = input("Escolha uma opção: ")
 
