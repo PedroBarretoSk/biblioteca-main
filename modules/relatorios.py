@@ -1,7 +1,7 @@
 from modules.gerenciadorLivros import listar_livros
 from usuarios import listar_alunos
 from modules.emprestimos import realizar_emprestimo
-from modules.aluno import Aluno
+from models.aluno import Aluno
  
 class Relatorio:
     def __init__(self, listar_livros, listar_alunos, realizar_emprestimo):
