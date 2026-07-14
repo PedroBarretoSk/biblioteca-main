@@ -4,14 +4,14 @@ from models.modules.gerenciadorLivros import (
     buscar_livro
 )
 
-from models.usuarios import (
+from modules.usuarios import (
     cadastrar_aluno,
     listar_alunos,
     buscar_aluno
 )
 
-from models.modules.emprestimos import realizar_emprestimo
-from modules.devolucoes import devolver_livro
+from modules.emprestimos import realizar_emprestimo
+from modules.devolucao import devolver_livro
 from modules.historico import listar_historico
 from modules.relatorios import menu_relatorios
 

@@ -1,4 +1,4 @@
-from aluno import *
+from models.aluno import *
 from dados import alunos
 
 def validar_cpf(cpf, lista):
