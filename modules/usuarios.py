@@ -1,4 +1,4 @@
-from aluno import Aluno
+from models.aluno import Aluno
 from dados import alunos
 
 def validar_nome(nome):
