@@ -1,5 +1,6 @@
 from dados import livros
 from models.Livro import Livro
+from modules.dados_livros import salvar_livros
  
 def cadastrar_livro():
     print("\n========== CADASTRAR LIVRO ==========")
@@ -59,6 +60,7 @@ def cadastrar_livro():
  
     novo_livro = Livro(codigo, titulo, autor, categoria)
     livros.append(novo_livro)
+    salvar_livros()
     print("Livro cadastrado com sucesso!")
  
 def listar_livros():
