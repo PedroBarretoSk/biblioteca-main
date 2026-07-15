@@ -1,0 +1,101 @@
+<section class="page-shell">
+  <header class="hero">
+    <p class="eyebrow">Biblioteca Senac</p>
+    <h1>Gestao de Livros</h1>
+    <p>
+      Interface Angular responsiva preparada para API REST (GET, POST, PUT, DELETE)
+      sem alterar as regras existentes no backend Python.
+    </p>
+  </header>
+
+  <div class="grid">
+    <article class="card form-card">
+      <h2>{{ editingId() === null ? 'Novo livro' : 'Editar livro' }}</h2>
+      <form [formGroup]="livroForm" (ngSubmit)="submit()" class="livro-form">
+        <label>
+          <span>Titulo</span>
+          <input type="text" formControlName="titulo" placeholder="Ex.: Programacao em Python" />
+        </label>
+
+        <label>
+          <span>Autor</span>
+          <input type="text" formControlName="autor" placeholder="Ex.: Fulano de Tal" />
+        </label>
+
+        <label>
+          <span>Ano de publicacao</span>
+          <input type="number" formControlName="anoPublicacao" min="0" />
+        </label>
+
+        <label class="checkbox-row">
+          <input type="checkbox" formControlName="disponivel" />
+          <span>Disponivel para emprestimo</span>
+        </label>
+
+        <div class="actions">
+          <button type="submit" [disabled]="loading()">
+            {{ editingId() === null ? 'Cadastrar' : 'Salvar alteracoes' }}
+          </button>
+          <button type="button" class="ghost" (click)="cancelEdit()" [disabled]="loading()">
+            Limpar
+          </button>
+        </div>
+      </form>
+    </article>
+
+    <article class="card table-card">
+      <div class="table-head">
+        <h2>Catalogo</h2>
+        <button type="button" class="ghost" (click)="loadLivros()" [disabled]="loading()">
+          Atualizar
+        </button>
+      </div>
+
+      @if (error()) {
+        <p class="error">{{ error() }}</p>
+      }
+
+      @if (loading()) {
+        <p class="loading">Carregando...</p>
+      } @else {
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Titulo</th>
+                <th>Autor</th>
+                <th>Ano</th>
+                <th>Status</th>
+                <th>Acoes</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (livro of livros(); track livro.id) {
+                <tr>
+                  <td>{{ livro.id }}</td>
+                  <td>{{ livro.titulo }}</td>
+                  <td>{{ livro.autor }}</td>
+                  <td>{{ livro.anoPublicacao }}</td>
+                  <td>
+                    <span class="status" [class.off]="!livro.disponivel">
+                      {{ livro.disponivel ? 'Disponivel' : 'Indisponivel' }}
+                    </span>
+                  </td>
+                  <td class="row-actions">
+                    <button type="button" class="ghost" (click)="startEdit(livro)">Editar</button>
+                    <button type="button" class="danger" (click)="remove(livro.id)">Excluir</button>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="6" class="empty">Nenhum livro encontrado.</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </article>
+  </div>
+</section>
