@@ -1,14 +1,15 @@
 export interface Livro {
-  id: number;
+  codigo: string;
   titulo: string;
   autor: string;
-  anoPublicacao: number;
+  categoria: string;
   disponivel: boolean;
 }
 
 export interface LivroPayload {
+  codigo?: string;
   titulo: string;
   autor: string;
-  anoPublicacao: number;
+  categoria: string;
   disponivel: boolean;
 }
