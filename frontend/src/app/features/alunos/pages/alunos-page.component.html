@@ -1,0 +1,88 @@
+<section class="page-shell">
+  <header class="hero">
+    <h1>Alunos</h1>
+  </header>
+
+  <div class="grid">
+    <article class="card form-card">
+      <h2>{{ editingMatricula() ? 'Editar aluno' : 'Novo aluno' }}</h2>
+      <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+        <label>
+          <span>Matrícula</span>
+          <input type="text" formControlName="matricula" />
+        </label>
+        <label>
+          <span>Nome</span>
+          <input type="text" formControlName="nome" />
+        </label>
+        <label>
+          <span>Turma</span>
+          <input type="text" formControlName="turma" />
+        </label>
+        <label>
+          <span>CPF</span>
+          <input type="text" formControlName="cpf" placeholder="00000000000" />
+        </label>
+        <label>
+          <span>Nome da mãe</span>
+          <input type="text" formControlName="nome_mae" />
+        </label>
+        <label>
+          <span>Telefone</span>
+          <input type="text" formControlName="telefone" />
+        </label>
+        <div class="actions">
+          <button type="submit" [disabled]="loading()">
+            {{ editingMatricula() ? 'Salvar' : 'Cadastrar' }}
+          </button>
+          <button type="button" class="ghost" (click)="cancelEdit()" [disabled]="loading()">
+            Limpar
+          </button>
+        </div>
+      </form>
+    </article>
+
+    <article class="card table-card">
+      <div class="table-head">
+        <h2>Alunos cadastrados</h2>
+        <button type="button" class="ghost" (click)="load()" [disabled]="loading()">Atualizar</button>
+      </div>
+
+      @if (error()) { <p class="error">{{ error() }}</p> }
+      @if (loading()) { <p class="loading">Carregando...</p> }
+      @else {
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Matrícula</th>
+                <th>Nome</th>
+                <th>Turma</th>
+                <th>Ativos</th>
+                <th>Total</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (aluno of alunos(); track aluno.matricula) {
+                <tr>
+                  <td>{{ aluno.matricula }}</td>
+                  <td>{{ aluno.nome }}</td>
+                  <td>{{ aluno.turma }}</td>
+                  <td>{{ aluno.emprestimos_ativos }}</td>
+                  <td>{{ aluno.total_emprestimos }}</td>
+                  <td class="actions-cell">
+                    <button type="button" (click)="startEdit(aluno)">Editar</button>
+                    <button type="button" class="danger" (click)="remove(aluno.matricula)">Remover</button>
+                  </td>
+                </tr>
+              } @empty {
+                <tr><td colspan="6" class="empty">Nenhum aluno cadastrado.</td></tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </article>
+  </div>
+</section>

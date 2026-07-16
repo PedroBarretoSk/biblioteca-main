@@ -1,5 +1,4 @@
 export const appSettings = {
-  apiBaseUrl: 'http://localhost:8000/api',
-  useMockData: true,
+  apiBaseUrl: 'http://localhost:8000',
   requestTimeoutMs: 8000
 };
