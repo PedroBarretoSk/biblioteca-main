@@ -1,13 +1,9 @@
-from modules.gerenciadorLivros import listar_livros
-from dados import alunos
-from modules.emprestimos import realizar_emprestimo
-from models.aluno import Aluno
+from dados import alunos, livros
  
 class Relatorio:
-    def __init__(self, listar_livros, listar_alunos, realizar_emprestimo):
+    def __init__(self, listar_livros, listar_alunos):
         self.listar_livros = listar_livros
         self.listar_alunos = listar_alunos
-        self.realizar_emprestimo = realizar_emprestimo
  
     def livros_disponiveis(self):
         livros_disponiveis = [livro for livro in self.listar_livros() if livro.disponivel]
@@ -23,20 +19,19 @@ class Relatorio:
             return
         return livros_emprestados
  
-       
     def ranking_alunos(self):
-        listar_alunos = sorted(
+        ranking = sorted(
             self.listar_alunos(),
             key=lambda aluno: aluno.total_emprestimos,
             reverse=True
         )
-        if not listar_alunos:
+        if not ranking:
             print("Nenhum aluno cadastrado no momento.")
             return
-        return listar_alunos
-   
+        return ranking
+ 
 def menu_relatorios():
-    relatorio = Relatorio(listar_livros, listar_alunos, None)
+    relatorio = Relatorio(lambda: livros, lambda: alunos)
     while True:
         print("\n--- Menu de Relatórios ---")
         print("1. Livros Disponíveis")
@@ -50,13 +45,13 @@ def menu_relatorios():
             if livros_disponiveis:
                 print("\n--- Livros Disponíveis ---")
                 for livro in livros_disponiveis:
-                    print(f"Título: {livro.titulo}, Autor: {livro.autor}, Ano: {livro.ano}")
+                    print(f"Título: {livro.titulo}, Autor: {livro.autor}, Categoria: {livro.categoria}")
         elif opcao == "2":
             livros_emprestados = relatorio.livros_emprestados()
             if livros_emprestados:
                 print("\n--- Livros Emprestados ---")
                 for livro in livros_emprestados:
-                    print(f"Título: {livro.titulo}, Autor: {livro.autor}, Ano: {livro.ano}")
+                    print(f"Título: {livro.titulo}, Autor: {livro.autor}, Categoria: {livro.categoria}")
         elif opcao == "3":
             ranking_alunos = relatorio.ranking_alunos()
             if ranking_alunos:
@@ -67,4 +62,3 @@ def menu_relatorios():
             break
         else:
             print("Opção inválida. Tente novamente.")
- 
