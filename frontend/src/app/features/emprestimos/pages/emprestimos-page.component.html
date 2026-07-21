@@ -38,8 +38,8 @@
       <div class="table-head">
         <h2>Empréstimos</h2>
         <div class="tab-group">
-          <button [class.active]="tab() === 'ativos'" (click)="setTab('ativos')">Ativos</button>
-          <button [class.active]="tab() === 'todos'" (click)="setTab('todos')">Todos</button>
+          <button type="button" class="ghost" [class.active]="tab() === 'ativos'" (click)="setTab('ativos')">Ativos</button>
+          <button type="button" class="ghost" [class.active]="tab() === 'todos'" (click)="setTab('todos')">Todos</button>
         </div>
         <button type="button" class="ghost" (click)="load()" [disabled]="loading()">Atualizar</button>
       </div>
@@ -67,7 +67,13 @@
                   <td>{{ emp.livro_codigo }}</td>
                   <td>{{ emp.data_emprestimo }}</td>
                   <td>{{ emp.data_devolucao ?? '—' }}</td>
-                  <td>{{ emp.atrasou ? emp.dias_atraso + ' dia(s)' : '—' }}</td>
+                  <td>
+                    @if (emp.atrasou) {
+                      <span class="status off">{{ emp.dias_atraso }} dia(s)</span>
+                    } @else {
+                      <span class="status">No prazo</span>
+                    }
+                  </td>
                 </tr>
               } @empty {
                 <tr><td colspan="6" class="empty">Nenhum empréstimo encontrado.</td></tr>
