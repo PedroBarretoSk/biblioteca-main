@@ -50,8 +50,6 @@ def menu_relatorios():
         print("3. Livros Emprestados")
         print("4. Ranking de Alunos")
         print("5. Atrasos")
-        print("6. Histórico de Devolução")
-     
         print("0. Voltar ao Menu Principal")
 
         opcao = input("Escolha uma opção: ")
