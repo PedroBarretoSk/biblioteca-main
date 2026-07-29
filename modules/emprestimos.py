@@ -53,3 +53,24 @@ def realizar_emprestimo():
         print('Empréstimo realizado com sucesso!')
     else:
         print('Livro indisponível para empréstimo!')
+
+class Mensagens:
+    @staticmethod
+    def livro_emprestado(titulo):
+        return f"livro '{titulo}' encontrado com sucesso."
+
+    @staticmethod
+    def livro_indisponivel(titulo):
+        return f"livro '{titulo}' indisponivel para emprestimo."
+
+    @staticmethod
+    def livro_inexistente(nome):
+        return f"Aluno '{nome}' nao encontrado."
+
+    @staticmethod
+    def livro_emprestado(titulo, aluno):
+        return f"Emprestimo realizado: '{titulo}' para {aluno}."
+
+    @staticmethod
+    def livro_devolvido(titulo):
+        return f"Livro '{titulo}' devolvido com sucesso."

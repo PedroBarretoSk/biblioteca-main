@@ -22,10 +22,12 @@ class Relatorio:
 
     def ranking_alunos(self):
         ranking = sorted(
+        ranking = sorted(
             self.listar_alunos(),
             key=lambda aluno: aluno.total_emprestimos,
             reverse=True
         )
+        if not ranking:
         if not ranking:
             print("Nenhum aluno cadastrado no momento.")
             return

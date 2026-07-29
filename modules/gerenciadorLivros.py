@@ -76,11 +76,20 @@ def buscar_livro():
         print("Nenhum livro cadastrado para busca.")
         return
  
-    termo = input("Digite o título ou o código do livro: ").strip().lower()
+    termo = input("Digite o título, autor, categoria ou o código do livro: ").strip().lower()
     encontrado = False
  
     for livro in livros:
-        if termo == livro.codigo or termo in livro.titulo.lower():
+        codigo_livro = str(livro.codigo).lower()
+        titulo_livro = livro.titulo.lower()
+        autor_livro = livro.autor.lower()
+        categoria_livro = livro.categoria.lower()
+
+        if (termo == codigo_livro or 
+            termo in titulo_livro or 
+            termo in autor_livro or 
+            termo in categoria_livro):
+            
             livro.exibir_detalhes()
             encontrado = True
  
