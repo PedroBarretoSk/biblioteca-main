@@ -24,6 +24,27 @@ export class LivrosService {
     );
   }
 
+   get(autor: string): Observable<Livro> {
+    return this.http.get<Livro>(`${this.endpoint}/${autor}`).pipe(
+      timeout(appSettings.requestTimeoutMs),
+      catchError((error) => this.handleError('Falha ao buscar livro', error))
+    );
+  }
+
+   get(categoria: string): Observable<Livro> {
+    return this.http.get<Livro>(`${this.endpoint}/${categoria}`).pipe(
+      timeout(appSettings.requestTimeoutMs),
+      catchError((error) => this.handleError('Falha ao buscar livro', error))
+    );
+  }
+
+   get(titulo: string): Observable<Livro> {
+    return this.http.get<Livro>(`${this.endpoint}/${titulo}`).pipe(
+      timeout(appSettings.requestTimeoutMs),
+      catchError((error) => this.handleError('Falha ao buscar livro', error))
+    );
+  }
+
   create(payload: LivroPayload): Observable<Livro> {
     return this.http.post<Livro>(`${this.endpoint}/`, payload).pipe(
       timeout(appSettings.requestTimeoutMs),
