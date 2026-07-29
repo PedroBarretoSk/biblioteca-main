@@ -17,13 +17,12 @@ export class LivrosPageComponent implements OnInit {
   protected readonly livros = signal<Livro[]>([]);
   protected readonly loading = signal(false);
   protected readonly error = signal<string | null>(null);
-  protected readonly editingCodigo = signal<string | null>(null);
+  protected readonly editingId = signal<number | null>(null);
 
   protected readonly livroForm = this.formBuilder.group({
-    codigo: ['', Validators.required],
     titulo: ['', [Validators.required, Validators.minLength(2)]],
     autor: ['', [Validators.required, Validators.minLength(2)]],
-    categoria: ['', Validators.required],
+    anoPublicacao: [new Date().getFullYear(), [Validators.required, Validators.min(0)]],
     disponivel: [true]
   });
 
@@ -53,14 +52,12 @@ export class LivrosPageComponent implements OnInit {
     }
 
     const payload = this.buildPayload();
-    const codigo = this.editingCodigo();
+    const id = this.editingId();
 
     this.loading.set(true);
     this.error.set(null);
 
-    const request$ = codigo === null
-      ? this.livrosService.create(payload)
-      : this.livrosService.update(codigo, payload);
+    const request$ = id === null ? this.livrosService.create(payload) : this.livrosService.update(id, payload);
 
     request$
       .pipe(finalize(() => this.loading.set(false)))
@@ -74,30 +71,31 @@ export class LivrosPageComponent implements OnInit {
   }
 
   protected startEdit(livro: Livro): void {
-    this.editingCodigo.set(livro.codigo);
+    this.editingId.set(livro.id);
     this.livroForm.patchValue({
-      codigo: livro.codigo,
       titulo: livro.titulo,
       autor: livro.autor,
-      categoria: livro.categoria,
+      anoPublicacao: livro.anoPublicacao,
       disponivel: livro.disponivel
     });
-    this.livroForm.get('codigo')?.disable();
   }
 
   protected cancelEdit(): void {
-    this.editingCodigo.set(null);
-    this.livroForm.reset({ titulo: '', autor: '', categoria: '', codigo: '', disponivel: true });
-    this.livroForm.get('codigo')?.enable();
+    this.editingId.set(null);
+    this.livroForm.reset({
+      titulo: '',
+      autor: '',
+      anoPublicacao: new Date().getFullYear(),
+      disponivel: true
+    });
   }
 
-  protected remove(codigo: string): void {
-    if (!confirm('Remover livro?')) return;
+  protected remove(id: number): void {
     this.loading.set(true);
     this.error.set(null);
 
     this.livrosService
-      .remove(codigo)
+      .remove(id)
       .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
         next: () => this.loadLivros(),
@@ -105,14 +103,18 @@ export class LivrosPageComponent implements OnInit {
       });
   }
 
+  protected trackById(_: number, livro: Livro): number {
+    return livro.id;
+  }
+
   private buildPayload(): LivroPayload {
-    const v = this.livroForm.getRawValue();
+    const formValue = this.livroForm.getRawValue();
+
     return {
-      codigo: (v.codigo ?? '').trim(),
-      titulo: (v.titulo ?? '').trim(),
-      autor: (v.autor ?? '').trim(),
-      categoria: (v.categoria ?? '').trim(),
-      disponivel: Boolean(v.disponivel)
+      titulo: (formValue.titulo ?? '').trim(),
+      autor: (formValue.autor ?? '').trim(),
+      anoPublicacao: Number(formValue.anoPublicacao ?? 0),
+      disponivel: Boolean(formValue.disponivel)
     };
   }
 }

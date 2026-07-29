@@ -1,20 +1,20 @@
 <section class="page-shell">
   <header class="hero">
-    <h1>Gestão de Livros</h1>
+    <p class="eyebrow">Biblioteca Senac</p>
+    <h1>Gestao de Livros</h1>
+    <p>
+      Interface Angular responsiva preparada para API REST (GET, POST, PUT, DELETE)
+      sem alterar as regras existentes no backend Python.
+    </p>
   </header>
 
   <div class="grid">
     <article class="card form-card">
-      <h2>{{ editingCodigo() === null ? 'Novo livro' : 'Editar livro' }}</h2>
+      <h2>{{ editingId() === null ? 'Novo livro' : 'Editar livro' }}</h2>
       <form [formGroup]="livroForm" (ngSubmit)="submit()" class="livro-form">
         <label>
-          <span>Código</span>
-          <input type="text" formControlName="codigo" placeholder="Ex.: 001" />
-        </label>
-
-        <label>
-          <span>Título</span>
-          <input type="text" formControlName="titulo" placeholder="Ex.: Programação em Python" />
+          <span>Titulo</span>
+          <input type="text" formControlName="titulo" placeholder="Ex.: Programacao em Python" />
         </label>
 
         <label>
@@ -23,18 +23,18 @@
         </label>
 
         <label>
-          <span>Categoria</span>
-          <input type="text" formControlName="categoria" placeholder="Ex.: Tecnologia" />
+          <span>Ano de publicacao</span>
+          <input type="number" formControlName="anoPublicacao" min="0" />
         </label>
 
         <label class="checkbox-row">
           <input type="checkbox" formControlName="disponivel" />
-          <span>Disponível para empréstimo</span>
+          <span>Disponivel para emprestimo</span>
         </label>
 
         <div class="actions">
           <button type="submit" [disabled]="loading()">
-            {{ editingCodigo() === null ? 'Cadastrar' : 'Salvar alterações' }}
+            {{ editingId() === null ? 'Cadastrar' : 'Salvar alteracoes' }}
           </button>
           <button type="button" class="ghost" (click)="cancelEdit()" [disabled]="loading()">
             Limpar
@@ -45,7 +45,7 @@
 
     <article class="card table-card">
       <div class="table-head">
-        <h2>Catálogo</h2>
+        <h2>Catalogo</h2>
         <button type="button" class="ghost" (click)="loadLivros()" [disabled]="loading()">
           Atualizar
         </button>
@@ -62,29 +62,29 @@
           <table>
             <thead>
               <tr>
-                <th>Código</th>
-                <th>Título</th>
+                <th>ID</th>
+                <th>Titulo</th>
                 <th>Autor</th>
-                <th>Categoria</th>
+                <th>Ano</th>
                 <th>Status</th>
-                <th>Ações</th>
+                <th>Acoes</th>
               </tr>
             </thead>
             <tbody>
-              @for (livro of livros(); track livro.codigo) {
+              @for (livro of livros(); track livro.id) {
                 <tr>
-                  <td>{{ livro.codigo }}</td>
+                  <td>{{ livro.id }}</td>
                   <td>{{ livro.titulo }}</td>
                   <td>{{ livro.autor }}</td>
-                  <td>{{ livro.categoria }}</td>
+                  <td>{{ livro.anoPublicacao }}</td>
                   <td>
                     <span class="status" [class.off]="!livro.disponivel">
-                      {{ livro.disponivel ? 'Disponível' : 'Indisponível' }}
+                      {{ livro.disponivel ? 'Disponivel' : 'Indisponivel' }}
                     </span>
                   </td>
                   <td class="row-actions">
                     <button type="button" class="ghost" (click)="startEdit(livro)">Editar</button>
-                    <button type="button" class="danger" (click)="remove(livro.codigo)">Excluir</button>
+                    <button type="button" class="danger" (click)="remove(livro.id)">Excluir</button>
                   </td>
                 </tr>
               } @empty {

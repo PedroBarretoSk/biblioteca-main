@@ -1,48 +1,36 @@
 from datetime import datetime
-from dados import livros, emprestimos
+from dados import livros 
 
 def devolver_livro():
     print("\n========== DEVOLVER LIVRO ==========")
-    codigo = input("Digite o código do livro: ").strip()
+    codigo_digitado = input("Digite o código do livro que está devolvendo: ").strip()
 
     livro_encontrado = None
     for livro in livros:
-        if str(livro.codigo) == codigo:
+        if livro.codigo == codigo_digitado:
             livro_encontrado = livro
             break
-    
-    if livro_encontrado is None:
-        print("Erro: Livro não encontrado.")
-        return
-        
-    if livro_encontrado.disponivel:
-        print("Aviso: Este livro já está na prateleira.")
+
+    if livro_encontrado == None:
+        print("Erro: Livro não encontrado no sistema.")
         return
 
-    data_hoje = datetime.now()
-    dias_com_livro = (data_hoje - livro_encontrado.data_emprestimo).days
-    atraso = dias_com_livro - 7
+    if livro_encontrado.disponivel == True:
+        print("Aviso: Este livro não está emprestado.")
+        return
 
-    if atraso > 0:
-        print(f"Atenção: Devolvido com {atraso} dia(s) de atraso!")
-    else:
-        atraso = 0
-        print("Devolução dentro do prazo de 7 dias.")
+    try:
+        data_hoje = datetime.now()
+        dias_com_livro = (data_hoje - livro_encontrado.data_emprestimo).days
 
-    for registro in emprestimos:
-        if registro['Livro'] == livro_encontrado and registro.get('data_devolucao', '') == '':
-            aluno = registro['Aluno']
-            if aluno.emprestimos_ativos > 0:
-                aluno.emprestimos_ativos -= 1
+        if dias_com_livro > 7:
+            atraso = dias_com_livro - 7
+            print(f"Atenção: Livro devolvido com {atraso} dia(s) de atraso!")
+        else:
+            print("Devolução realizada dentro do prazo de 7 dias.")
             
-            registro["data_devolucao"] = data_hoje.strftime("%d/%m/%Y %H:%M")
-            registro["atrasou"] = "Sim" if atraso > 0 else "Não"
-            registro["dias_atraso"] = f"{atraso} dia(s)"
-            registro["id_livro"] = livro_encontrado.codigo
-            registro["id_aluno"] = aluno.matricula
-            break
+    except Exception:
+        print("Aviso: Data de empréstimo não registrada.")
 
     livro_encontrado.disponivel = True
-    livro_encontrado.data_emprestimo = None
-
-    print(f"Sucesso! O livro '{livro_encontrado.titulo}' foi devolvido.")
+    print(f"Sucesso! O livro '{livro_encontrado.titulo}' voltou para a prateleira.")

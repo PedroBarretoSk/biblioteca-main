@@ -1,6 +1,3 @@
-from modules.dados_livros import carregar_livros
-carregar_livros()
-
 from modules.gerenciadorLivros import (
     cadastrar_livro,
     listar_livros,
