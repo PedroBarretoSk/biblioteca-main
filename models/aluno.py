@@ -11,5 +11,5 @@ class Aluno: #Classe aluno
         self.total_emprestimos = total_emprestimos
     def exibir_aluno(self): # Metodo de exibição do objeto
         print(f'''
-Nome: {self.nome} | CPF: {self.cpf} | Nome da mãe: {self.nome_mae}
-Matrícula: {self.matricula} | Turma: {self.turma} | Telefone: {self.telefone}''')
+Matrícula: {self.matricula} | Nome: {self.nome} | Turma: {self.turma}
+CPF: {self.cpf} | Nome da mãe: {self.nome_mae} | Telefone: {self.telefone}''')
