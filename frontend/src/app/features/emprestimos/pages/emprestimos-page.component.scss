@@ -1,0 +1,20 @@
+.form-card hr {
+  border: 0;
+  border-top: 1px solid #dbe2ef;
+  margin: 1rem 0;
+}
+
+.tab-group {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.tab-group button.active {
+  background: #0f172a;
+  color: #fff;
+  border-color: #0f172a;
+}
+
+tr.overdue td {
+  color: #9f1239;
+}

@@ -1,0 +1,25 @@
+.livro-form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.livro-form label {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.livro-form input[type='text'],
+.livro-form input[type='number'] {
+  height: 42px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 0 0.75rem;
+  font: inherit;
+}
+
+.checkbox-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.6rem;
+  align-items: center;
+}

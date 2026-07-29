@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "titulo": "Algoritmos para Iniciantes",
+    "autor": "Ana Costa",
+    "anoPublicacao": 2022,
+    "disponivel": true
+  },
+  {
+    "id": 2,
+    "titulo": "Estruturas de Dados Aplicadas",
+    "autor": "Bruno Lima",
+    "anoPublicacao": 2020,
+    "disponivel": false
+  },
+  {
+    "id": 3,
+    "titulo": "Python no Mundo Real",
+    "autor": "Carla Souza",
+    "anoPublicacao": 2023,
+    "disponivel": true
+  }
+]

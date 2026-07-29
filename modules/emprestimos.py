@@ -1,45 +1,76 @@
 #Lestat & Barbara
-
-import usuarios, gerenciadorLivros
+from datetime import datetime # importa a biblioteca para definir datas
+from dados import livros, alunos, emprestimos # importa as listas do modulo dados
 
 def realizar_emprestimo():
     print("--- REALIZAR EMPRÉSTIMO---")
 
-    busca_1 = input('Digite a matricula do aluno: ').strip()
+    # Localiza o aluno pela matricula
+    busca_1 = input('Digite a matricula do aluno: ').strip() 
 
     aluno_encontrado = None
 
-    for aluno in usuarios.lista_alunos:
+    for aluno in alunos:
         if aluno.matricula == busca_1:
             aluno_encontrado = aluno
             print('Aluno encontrado!')
             break
 
-    if aluno_encontrado is None:
+    if aluno_encontrado is None: #Interrompe o processo se o nome do aluno for invalido
         print('Aluno não encontrado!')
         return
 
+    # Localiza o livro pelo codigo
     busca_2 = input('Digite o codigo do livro: ').strip()
 
     livro_encontrado = None
 
-    for livro in gerenciadorLivros.livros:
+    for livro in livros:
         if livro.codigo == busca_2:
             livro_encontrado = livro
             print('livro encontrado!')
             break
         
-    if livro_encontrado is None:
+    if livro_encontrado is None: # interrompe o processo se o livro for invalido
         print('Livro não encontrado!')
         return
     
+    # verifica a disponibilidade e registra o emprestimo na lista
     if livro_encontrado.disponivel:
         livro_encontrado.disponivel = False
+        livro_encontrado.data_emprestimo = datetime.now()
 
-        livro_encontrado.emprestimos_ativos += 1
-        livro_encontrado.total_emprestimos += 1
+        aluno_encontrado.emprestimos_ativos += 1
+        aluno_encontrado.total_emprestimos += 1
 
+        registro = {
+            "Aluno": aluno_encontrado,
+            "Livro": livro_encontrado,
+            "Data": livro_encontrado.data_emprestimo # Nota: importante adicionarem self data_emprestimo na classe livro
+        }
+        emprestimos.append(registro)
         
         print('Empréstimo realizado com sucesso!')
     else:
         print('Livro indisponível para empréstimo!')
+
+class Mensagens:
+    @staticmethod
+    def livro_emprestado(titulo):
+        return f"livro '{titulo}' encontrado com sucesso."
+
+    @staticmethod
+    def livro_indisponivel(titulo):
+        return f"livro '{titulo}' indisponivel para emprestimo."
+
+    @staticmethod
+    def livro_inexistente(nome):
+        return f"Aluno '{nome}' nao encontrado."
+
+    @staticmethod
+    def livro_emprestado(titulo, aluno):
+        return f"Emprestimo realizado: '{titulo}' para {aluno}."
+
+    @staticmethod
+    def livro_devolvido(titulo):
+        return f"Livro '{titulo}' devolvido com sucesso."

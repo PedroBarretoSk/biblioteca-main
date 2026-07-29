@@ -1,0 +1,87 @@
+<section class="page-shell">
+  <header class="hero">
+    <h1>Empréstimos</h1>
+  </header>
+
+  <div class="grid">
+    <article class="card form-card">
+      <h2>Realizar Empréstimo</h2>
+      <form [formGroup]="empForm" (ngSubmit)="realizarEmprestimo()" class="form">
+        <label>
+          <span>Matrícula do Aluno</span>
+          <input type="text" formControlName="aluno_matricula" />
+        </label>
+        <label>
+          <span>Código do Livro</span>
+          <input type="text" formControlName="livro_codigo" />
+        </label>
+        <div class="actions">
+          <button type="submit" [disabled]="loading()">Emprestar</button>
+        </div>
+      </form>
+
+      <hr />
+
+      <h2>Devolver Livro</h2>
+      <form [formGroup]="devForm" (ngSubmit)="devolver()" class="form">
+        <label>
+          <span>Código do Livro</span>
+          <input type="text" formControlName="livro_codigo" />
+        </label>
+        <div class="actions">
+          <button type="submit" [disabled]="loading()">Devolver</button>
+        </div>
+      </form>
+    </article>
+
+    <article class="card table-card">
+      <div class="table-head">
+        <h2>Empréstimos</h2>
+        <div class="tab-group">
+          <button type="button" class="ghost" [class.active]="tab() === 'ativos'" (click)="setTab('ativos')">Ativos</button>
+          <button type="button" class="ghost" [class.active]="tab() === 'todos'" (click)="setTab('todos')">Todos</button>
+        </div>
+        <button type="button" class="ghost" (click)="load()" [disabled]="loading()">Atualizar</button>
+      </div>
+
+      @if (error()) { <p class="error">{{ error() }}</p> }
+      @if (loading()) { <p class="loading">Carregando...</p> }
+      @else {
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Aluno</th>
+                <th>Livro</th>
+                <th>Emprestado em</th>
+                <th>Devolvido em</th>
+                <th>Atraso</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (emp of emprestimos(); track emp.id) {
+                <tr [class.overdue]="emp.atrasou">
+                  <td>{{ emp.id }}</td>
+                  <td>{{ emp.aluno_matricula }}</td>
+                  <td>{{ emp.livro_codigo }}</td>
+                  <td>{{ emp.data_emprestimo }}</td>
+                  <td>{{ emp.data_devolucao ?? '—' }}</td>
+                  <td>
+                    @if (emp.atrasou) {
+                      <span class="status off">{{ emp.dias_atraso }} dia(s)</span>
+                    } @else {
+                      <span class="status">No prazo</span>
+                    }
+                  </td>
+                </tr>
+              } @empty {
+                <tr><td colspan="6" class="empty">Nenhum empréstimo encontrado.</td></tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </article>
+  </div>
+</section>
