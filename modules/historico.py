@@ -228,14 +228,12 @@ def aplicar_filtros(registros, aluno=None, livro=None, tipo=None):
 
     return resultado
 
-
 def formatar_data(obj):
     if obj == "":
         return ""
     if hasattr(obj, "strftime"):
         return obj.strftime("%d/%m/%Y %H:%M")
     return str(obj)
-
 
 def mostrar_registros(registros):
     if not registros:
@@ -281,7 +279,6 @@ def exibir_historico_geral():
     if escolha == "N":
         return
 
-    # Menu de filtros
     while True:
         print("\nEscolha o tipo de filtro:")
         print("1 - Busca por Aluno (nome ou matrícula)")
@@ -340,6 +337,7 @@ def exibir_historico_geral():
                 break
             else:
                 print("Opção inválida!")
+
 def buscar_livro_historico(livros):
     while True:
         busca = input("Digite o título ou código do livro selecionado: ").strip()
