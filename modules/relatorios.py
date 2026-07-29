@@ -37,6 +37,51 @@ class Relatorio:
             print("Nenhum aluno com atraso no momento.")
             return
         return atrasados
+    
+    def livros_mais_emprestados(self):
+        emprestimos = self.listar_emprestimos()
+        if not emprestimos:
+            print("Nenhum empréstimo registrado no momento.")
+            return
+        livros_count = {}
+        for reg in emprestimos:
+            livro = reg.get("Livro")
+            if livro:
+                livros_count[livro.titulo] = livros_count.get(livro.titulo, 0) + 1
+        livros_mais_emprestados = sorted(livros_count.items(), key=lambda x: x[1], reverse=True)
+        return livros_mais_emprestados
+
+    def alunos_leitores(self):
+        alunos_leitores = [aluno for aluno in self.listar_alunos() if aluno.total_emprestimos > 0]
+        if not alunos_leitores:
+            print("Nenhum aluno realizou empréstimos no momento.")
+            return
+        return alunos_leitores
+
+    def estaticas_categorias(self):
+        livros = self.listar_livros()
+        if not livros:
+            print("Nenhum livro cadastrado no momento.")
+            return
+        categorias_count = {}
+        for livro in livros:
+            categoria = livro.categoria
+            categorias_count[categoria] = categorias_count.get(categoria, 0) + 1
+        return categorias_count
+
+    def estatistica_livros(self):
+        emprestimos = self.listar_emprestimos()
+        if not emprestimos:
+            print("Nenhum empréstimo registrado no momento.")
+            return
+        livros_count = {}
+        for reg in emprestimos:
+            livro = reg.get("Livro")
+            if livro:
+                livros_count[livro] = livros_count.get(livro, 0) + 1
+        return livros_count
+
+        
 
 
 def menu_relatorios():
@@ -48,6 +93,11 @@ def menu_relatorios():
         print("3. Livros Emprestados")
         print("4. Ranking de Alunos")
         print("5. Atrasos")
+        print("6. Livros Mais Emprestados")
+        print("7. Alunos Leitores")
+        print("8. Estatísticas por Categoria")
+        print("9. Estatísticas de Livros")
+
         print("0. Voltar ao Menu Principal")
 
         opcao = input("Escolha uma opção: ")
@@ -91,7 +141,35 @@ def menu_relatorios():
                 for reg in alunos_atrasados:
                     print(f"Nome: {reg['Aluno'].nome}, Livro: {reg['Livro'].titulo}, Dias de Atraso: {reg['dias_atraso']}")
 
-        elif opcao == "0":
+        elif opcao == '6':
+            livros_mais_emprestados = relatorio.livros_mais_emprestados()
+            if livros_mais_emprestados:
+                print("\n--- Livros Mais Emprestados ---")
+                for titulo, count in livros_mais_emprestados:
+                    print(f"Título: {titulo}, Total de Empréstimos: {count}")
+
+        elif opcao == '7':
+            alunos_leitores = relatorio.alunos_leitores()
+            if alunos_leitores:
+                print("\n--- Alunos Leitores ---")
+                for aluno in alunos_leitores:
+                    print(f"Nome: {aluno.nome}, Total de Empréstimos: {aluno.total_emprestimos}")
+
+        elif opcao == '8':
+            categorias_count = relatorio.estaticas_categorias()
+            if categorias_count:
+                print("\n--- Estatísticas por Categoria ---")
+                for categoria, count in categorias_count.items():
+                    print(f"Categoria: {categoria}, Total de Livros: {count}")
+
+        elif opcao == '9':
+            livros_estatistica = relatorio.estatistica_livros()
+            if livros_estatistica:
+                print("\n--- Estatísticas de Livros ---")
+                for livro, count in livros_estatistica.items():
+                    print(f"Título: {livro.titulo}: {count} emprestados")
+           
+        elif opcao == '0':
             break
         else:
             print("Opção inválida. Tente novamente.")
