@@ -17,31 +17,35 @@ export class LivrosService {
     );
   }
 
-  get(codigo: string): Observable<Livro> {
+ 
+  getByCodigo(codigo: string): Observable<Livro> {
     return this.http.get<Livro>(`${this.endpoint}/${codigo}`).pipe(
       timeout(appSettings.requestTimeoutMs),
-      catchError((error) => this.handleError('Falha ao buscar livro', error))
+      catchError((error) => this.handleError('Falha ao buscar livro por código', error))
     );
   }
 
-   get(autor: string): Observable<Livro> {
-    return this.http.get<Livro>(`${this.endpoint}/${autor}`).pipe(
+ 
+  getByAutor(autor: string): Observable<Livro[]> {
+    return this.http.get<Livro[]>(`${this.endpoint}?autor=${autor}`).pipe(
       timeout(appSettings.requestTimeoutMs),
-      catchError((error) => this.handleError('Falha ao buscar livro', error))
+      catchError((error) => this.handleError('Falha ao buscar livro por autor', error))
     );
   }
 
-   get(categoria: string): Observable<Livro> {
-    return this.http.get<Livro>(`${this.endpoint}/${categoria}`).pipe(
+ 
+  getByCategoria(categoria: string): Observable<Livro[]> {
+    return this.http.get<Livro[]>(`${this.endpoint}?categoria=${categoria}`).pipe(
       timeout(appSettings.requestTimeoutMs),
-      catchError((error) => this.handleError('Falha ao buscar livro', error))
+      catchError((error) => this.handleError('Falha ao buscar livro por categoria', error))
     );
   }
 
-   get(titulo: string): Observable<Livro> {
-    return this.http.get<Livro>(`${this.endpoint}/${titulo}`).pipe(
+ 
+  getByTitulo(titulo: string): Observable<Livro[]> {
+    return this.http.get<Livro[]>(`${this.endpoint}?titulo=${titulo}`).pipe(
       timeout(appSettings.requestTimeoutMs),
-      catchError((error) => this.handleError('Falha ao buscar livro', error))
+      catchError((error) => this.handleError('Falha ao buscar livro por título', error))
     );
   }
 
