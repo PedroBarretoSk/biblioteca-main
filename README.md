@@ -16,3 +16,25 @@ Para executar o frontend:
 3. Rode npm run start
 
 Para detalhes de arquitetura e integracao REST/mock, consulte frontend/README.md.
+
+## Backend
+
+1. Acesse a pasta do projeto
+```bash
+cd biblioteca-main
+cd biblioteca-api
+```
+
+2. Instale as dependências 
+```bash
+pip install -r requirements.txt
+```
+
+3. Execute a aplicação 
+```bash
+python app.py
+```
+4. Acessando a aplicação
+```bash
+htpp://localhost:4200
+```
